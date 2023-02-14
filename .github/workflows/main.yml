@@ -10,7 +10,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: "3355817d-e6f4-4dd2-ad19-ce56299ab439"
-          heroku_app_name: "theavikaub"
+          heroku_app_name: "theavikaub2"
           heroku_email: "theavi.02@proton.me"
           usedocker: true
           docker_heroku_process_type: web
