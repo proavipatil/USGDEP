@@ -1,5 +1,4 @@
 {   
-    "stack": "heroku-20",
     "env": {
         "API_ID": {"description": "Get this value from https://my.telegram.org"},
         "API_HASH": {"description": "Get this value from https://my.telegram.org"},
@@ -21,6 +20,7 @@
             "description": "get a Heroku API key from http://dashboard.heroku.com/account",
             "required": false}
     },
+    "stack": "container",
     "buildpacks": [
         {"url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"},
         {"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"},
@@ -29,6 +29,7 @@
         {"url": "https://github.com/rking32/heroku-buildpack-chromedriver"},
         {"url": "https://github.com/heroku/heroku-buildpack-apt.git"},
         {"url": "https://github.com/subinps/heroku-buildpack-nodejs"},
+        {"url": "https://github.com/riganf/heroku-buildpack-mp4decrypt"},
         {"url": "heroku/python"}
     ]
 }
