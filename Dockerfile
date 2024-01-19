@@ -7,7 +7,10 @@ WORKDIR /app/
 RUN apt -qq update
 RUN apt -qq install -y --no-install-recommends \
     curl git pv jq gnupg2 unzip wget ffmpeg \
-    mediainfo aria2 p7zip-full unrar-free
+    mediainfo aria2 p7zip-full unrar-free 
+    
+    # && \
+    # chmod +x /app/N_m3u8DL-RE
 
 # add mkvtoolnix
 RUN wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | apt-key add - && \
@@ -15,6 +18,7 @@ RUN wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | apt-key 
 RUN sh -c 'echo "deb https://mkvtoolnix.download/debian/ buster main" >> /etc/apt/sources.list.d/bunkus.org.list' && \
     sh -c 'echo deb http://deb.debian.org/debian buster main contrib non-free | tee -a /etc/apt/sources.list'
 RUN wget -O /usr/share/keyrings/gpg-pub-moritzbunkus.gpg https://mkvtoolnix.download/gpg-pub-moritzbunkus.gpg && apt update && apt install mkvtoolnix mkvtoolnix-gui -y
+RUN apt install fdkaac -y
 
 # install chrome
 RUN mkdir -p /tmp/ && \
@@ -37,9 +41,19 @@ ENV GOOGLE_CHROME_DRIVER /usr/bin/chromedriver
 ENV GOOGLE_CHROME_BIN /usr/bin/google-chrome-stable
 
 # install node-js
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs && \
-    npm i -g npm
+# RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+#     apt-get install -y nodejs && \
+#    npm i -g npm
+
+# install rar
+RUN mkdir -p /tmp/ && \
+    cd /tmp/ && \
+    wget -O /tmp/rarlinux.tar.gz http://www.rarlab.com/rar/rarlinux-x64-6.0.0.tar.gz && \
+    tar -xzvf rarlinux.tar.gz && \
+    cd rar && \
+    cp -v rar unrar /usr/bin/ && \
+    # clean up
+    rm -rf /tmp/rar*
 
 # copy the content of the local src directory to the working directory
 COPY . .
@@ -49,5 +63,3 @@ RUN pip install -r requirements.txt
 
 # command to run on container start
 CMD [ "bash", "./run" ]
-
-
